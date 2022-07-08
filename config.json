@@ -1,6 +1,6 @@
 {
     "basePath": "myTerminal",
     "aliases": {
-        "/setup": "/dotfiles/master/.setup/bootstrap"
+        "/setup": "/dotfiles/master/bootstrap"
     }
 }
