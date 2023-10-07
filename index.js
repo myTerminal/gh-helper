@@ -3,7 +3,12 @@
 const express = require('express');
 const axios = require('axios');
 
-const { RESPONSE_TYPES, REQUESTED_FORMATS, determineResponseType } = require('./lib.js');
+const {
+    RESPONSE_TYPES,
+    REQUESTED_FORMATS,
+    determineResponseType,
+    getProcessedData
+} = require('./lib.js');
 const { basePath, aliases } = require('./config.json');
 
 module.exports = url => {
@@ -27,7 +32,7 @@ module.exports = url => {
                 .then(
                     ({ data }) => {
                         res.contentType(responseType || determineResponseType(requestPath));
-                        res.send(data);
+                        res.send(getProcessedData(data, query.t));
                     }
                 )
                 .catch(
