@@ -27,6 +27,12 @@ module.exports = url => {
                         res.contentType('text/plain');
                         res.send(data);
                     }
+                )
+                .catch(
+                    () => {
+                        res.contentType('text/plain');
+                        res.send('ERROR!');
+                    }
                 );
         }
     );
