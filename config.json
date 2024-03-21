@@ -1,7 +1,12 @@
 {
     "basePath": "myTerminal",
     "aliases": {
-        "/setup": "/dotfiles/master/bootstrap",
-        "/tp": "/myTerminal.github.io/master/other/thinkpads.txt"
+        "/setup": "/dotfiles/master/bootstrap"
+    },
+    "superAliases": {
+	"/tp": {
+	    "url": "/myTerminal.github.io/master/other/thinkpads.txt",
+	    "type": "list"
+	}
     }
 }

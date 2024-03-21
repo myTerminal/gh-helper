@@ -4,12 +4,11 @@ const express = require('express');
 const axios = require('axios');
 
 const {
-    RESPONSE_TYPES,
     REQUESTED_FORMATS,
     determineResponseType,
     getProcessedData
 } = require('./lib.js');
-const { basePath, aliases } = require('./config.json');
+const { basePath, aliases, superAliases } = require('./config.json');
 
 module.exports = url => {
     const app = express();
@@ -24,15 +23,27 @@ module.exports = url => {
     app.get(
         '*',
         ({ path, query }, res) => {
-            const requestPath = aliases[path] || path;
-            const responseType = REQUESTED_FORMATS[query.t];
+	    let requestPath,
+		responseFormat,
+		responseType;
+
+	    const match = superAliases[path];
+
+	    if (match) {
+		requestPath = match.url;
+		responseFormat = match.type;
+	    } else {
+		requestPath = aliases[path] || path;
+		responseFormat = query.t;
+	    }
+	    responseType = REQUESTED_FORMATS[responseFormat];
 
             axios
                 .get(`https://raw.githubusercontent.com/${basePath}${requestPath}`)
                 .then(
                     ({ data }) => {
                         res.contentType(responseType || determineResponseType(requestPath));
-                        res.send(getProcessedData(data, query.t));
+                        res.send(getProcessedData(data, responseFormat));
                     }
                 )
                 .catch(
