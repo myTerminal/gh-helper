@@ -28,7 +28,6 @@ const getProcessedData = (data, requestedFormat) => {
     return transform ? transform(data) : data;
 };
 
-module.exports.RESPONSE_TYPES = RESPONSE_TYPES;
 module.exports.REQUESTED_FORMATS = REQUESTED_FORMATS;
 module.exports.determineResponseType = determineResponseType;
 module.exports.getProcessedData = getProcessedData;
